@@ -1,6 +1,6 @@
 import json
 
-def manifest_create(version: str, original_size: float, root_hash: str, chunks: list, filenames: list):
+def manifest_create(version: str, original_size: int, root_hash: str, chunks: list, filenames: list):
 
     manifest = dict()
     
@@ -13,14 +13,14 @@ def manifest_create(version: str, original_size: float, root_hash: str, chunks: 
         print("not matching length in filenames and chunks")
         return
     
-    manifest["data"] = []
+    manifest["chunks"] = []
     
     for i in range(len(chunks)):
         
         chunk_data = {}
         chunk_data["index"], chunk_data["filename"]  = i, filenames[i]
         
-        manifest["data"].append(chunk_data)
+        manifest["chunks"].append(chunk_data)
           
     return manifest
         
@@ -37,6 +37,5 @@ def json_manifest(manifest: dict):
         return False
     
 def example():
-    
     manifest = manifest_create("1.2", 2.2, "hajsdkh", ["aksdsa", "asddas", "asdsdasd"], ["joe", "jim", "peter"])
     return json_manifest(manifest)
