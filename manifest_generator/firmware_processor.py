@@ -57,7 +57,7 @@ def split_into_chunks(data: bytes, n: int = NUM_CHUNKS):
         offset += length
     return chunks
 
-def build_merkle_tree(leaves: list[bytes]) -> list[list[bytes]]:
+def build_merkle_tree(leaves: list[bytes]) -> MerkleTree:
     return MerkleTree(leaves)
     
 
@@ -66,7 +66,7 @@ def read_file_to_binary(filename):
         data = file.read()
     return data
 
-def process_firmware(data: bytes) -> tuple[list[bytes], list[list[bytes]], bytes]:
+def process_firmware(data: bytes) -> tuple[list[bytes], str]:
     chunks = split_into_chunks(data)
     leaves = [sha256(c) for c in chunks]
     merkletree: MerkleTree = build_merkle_tree(leaves)
