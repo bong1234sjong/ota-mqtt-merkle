@@ -12,4 +12,5 @@ def main():
     
     json_manifest(manifest)
     
+    generate_chunk_files(chunks)
 main()

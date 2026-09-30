@@ -73,3 +73,9 @@ def process_firmware(data: bytes) -> tuple[list[bytes], list[list[bytes]], bytes
     merkle_root = merkletree.getRootHash()
     return chunks, merkle_root
 
+def generate_chunk_files(chunks):
+    for i, chunk in enumerate(chunks):
+        with open(f"chunk{i}", "wb") as file:
+            file.write(chunk)
+            
+        
