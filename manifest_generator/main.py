@@ -1,5 +1,5 @@
-from firmware_processor import * 
-from manifest import *
+from .firmware_processor import * 
+from .manifest import *
 
 def main():
     data = read_file_to_binary("firmware.txt")

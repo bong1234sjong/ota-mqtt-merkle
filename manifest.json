@@ -3,7 +3,7 @@
     "original_size": 50,
     "total_chunks": 4,
     "root_hash": "ec07ed7845416ad9caa7968f8c30b32b3c7a5160d4103e43cf7a007104ba8b08",
-    "data": [
+    "chunks": [
         {
             "index": 0,
             "filename": "chunk0"

@@ -32,7 +32,7 @@ import hashlib
 import json
 import os
 import sys
-from merkletree import MerkleTree
+from .merkletree import MerkleTree
 NUM_CHUNKS = 4
 
 
