@@ -275,9 +275,11 @@ class OtaClient:
         # Merkle root from the received chunks equals the manifest's root
         ordered = [self.chunks[i] for i in indices]
         computed_root = compute_merkle_root(ordered) # same function the server used
+        print(f"Computed root {computed_root}")
+        print(f"Manifest root {self.manifest_root}")
         if computed_root != self.manifest_root:
             raise Reject("Merkle root mismatch: a chunk is corrupted or wrong")
-    
+        
         # Reconstructed size equals the manifest's firmware_size
         firmware = b"".join(ordered)
         if len(firmware) != self.firmware_size:
@@ -287,7 +289,7 @@ class OtaClient:
     
         with open(self.output_path, "wb") as f:
             f.write(firmware)
-        print(f"Saved firmware to {self.output_path}")
+        print(f"Saved firmware to {self.output_path}, version {self.firmware_version}, size {len(firmware)} bytes")
         self.save_status("ok", "all checks passed")
         self.success = True
         self.done = True
