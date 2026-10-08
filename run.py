@@ -1,10 +1,3 @@
-"""
-python3 run.py firmware.txt
-python3 run.py firmware.txt --version 1.4
-
-Start ota_client.py on the Raspberry Pi first: nothing is retained by the broker.
-"""
-
 import argparse
 from ota_server import send_firmware, manifest_create, json_manifest, read_file_to_binary, process_firmware, generate_chunk_files
 
@@ -28,7 +21,6 @@ def main():
 
     # Save chunk files
     generate_chunk_files(chunks)
-
     send_firmware(manifest, chunks)
 
 

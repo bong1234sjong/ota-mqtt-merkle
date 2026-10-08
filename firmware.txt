@@ -1,1 +1,4 @@
-helloworldhelloworldhelloworldhelloworldhelloworld
+chunk0 41 bytes: AAAAAAAAAAAAAAAAAAAAAA
+chunk1 41 bytes: BBBBBBBBBBBBBBBBBBBBBB
+chunk2 40 bytes: CCCCCCCCCCCCCCCCCCCCC
+chunk3 40 bytes: DDDDDDDDDDDDDDDDDDDDD

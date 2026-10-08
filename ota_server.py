@@ -2,17 +2,16 @@ import time
 from paho.mqtt import client as mqtt_client
 from paho.mqtt.properties import Properties
 from paho.mqtt.packettypes import PacketTypes
-import random, json
+import json
 from typing import List, Union
 import hashlib
 
 
-BROKER = "localhost"
 FIRMWARE_TOPIC = "ota/firmware" 
 NUM_CHUNKS = 4    
 PORT = 1883
-QOS = 2
-client_id = f'python-mqtt-{random.randint(0, 1000)}'
+
+client_id = "ota-workstation-publisher"
 
 
 class Node:
@@ -72,8 +71,7 @@ def split_into_chunks(data: bytes, n: int = NUM_CHUNKS):
     size = len(data)
     if size < n:
         raise ValueError(
-            f"Firmware is {size} bytes; at least {n} bytes are needed "
-            f"to produce {n} non-empty chunks."
+            f"Firmware is {size} bytes, but at least {n} bytes are needed "
         )
     q = size // n
     r = size % n
@@ -152,26 +150,26 @@ def connect_mqtt():
     
 
     client = mqtt_client.Client(
-        client_id=client_id,
+        client_id= "ota-workstation-publisher",
         callback_api_version=mqtt_client.CallbackAPIVersion.VERSION2,
         protocol=mqtt_client.MQTTv5 # så vi kan bruge properties i publish
     )
     client.on_connect = on_connect
-    client.connect(BROKER, PORT)
+    client.connect("localhost", PORT)
     return client
 
 def publish_manifest(client, manifest):
     properties = Properties(PacketTypes.PUBLISH)
     properties.ContentType = "application/json"
     payload = json.dumps(manifest)
-    result = client.publish(FIRMWARE_TOPIC, payload, qos=QOS, properties=properties)
+    result = client.publish(FIRMWARE_TOPIC, payload, qos=2, properties=properties)
     result.wait_for_publish()
 
 def publish_chunk(client, filename, data):
     properties = Properties(PacketTypes.PUBLISH)
     properties.ContentType = "application/octet-stream"
     properties.UserProperty = [("filename", filename)]
-    result = client.publish(FIRMWARE_TOPIC, data, qos=QOS, properties=properties)
+    result = client.publish(FIRMWARE_TOPIC, data, qos=2, properties=properties)
     result.wait_for_publish()
  
 def publish(client, manifest, chunks):
